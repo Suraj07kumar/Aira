@@ -1,12 +1,16 @@
-const CACHE_NAME = 'aira-v5';
+const CACHE_NAME = 'aira-v6';
 const ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/logo.png',
   '/aira_home.png',
   '/aira_good.png',
   '/aira_poor.png',
   '/aira_hazardous.png',
+  '/aira_good-removebg.png',
+  '/aira_poor-removebg.png',
+  '/aira_hazardous-removebg.png',
   'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Nunito:wght@300;400;500;600&display=swap'
 ];
 
@@ -42,8 +46,8 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Network-first for HTML so updates are always picked up
-  if (event.request.destination === 'document') {
+  // Network-first for HTML and manifest so updates are always picked up
+  if (event.request.destination === 'document' || event.request.url.endsWith('manifest.json') || event.request.url.endsWith('logo.png')) {
     event.respondWith(
       fetch(event.request).then(response => {
         const clone = response.clone();
